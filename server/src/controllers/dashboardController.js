@@ -19,7 +19,15 @@ exports.getDashboardData = async (req, res) => {
     try {
       // 1. Fetch Prices (CoinGecko)
       const coinIds = prefs.assets.join(',');
-      const pricesRes = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=usd`);
+      const pricesRes = await axios.get(`https://api.coingecko.com/api/v3/simple/price`, {
+            params: {
+                ids: coinIds,
+                vs_currencies: 'usd'
+        },
+        headers: {
+      'x-cg-demo-api-key': process.env.COINGECKO_API_KEY
+    }
+  });
       dashboardData.prices = pricesRes.data;
     } catch (e) { console.error("Prices API Failed:", e.message);
         dashboardData.prices = prefs.assets.reduce((acc, coin) => {
