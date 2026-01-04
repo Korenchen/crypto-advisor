@@ -14,7 +14,7 @@ A full-stack web application that provides tailored cryptocurrency insights, rea
 ## 🛠️ Tech Stack
 - **Frontend**: React.js, Vite, Tailwind CSS v4, Lucide React.
 - **Backend**: Node.js, Express.js.
-- **Database**: SQLite (local file-based).
+- **Database**: SQLite.
 - **APIs**: OpenRouter (AI), CoinGecko (Prices), CryptoPanic (News), Reddit (Memes).
 
 ---
@@ -32,3 +32,15 @@ cd server
 npm install
 ```
 Create a `.env` file in the `server` folder
+```bash
+PORT=5000
+JWT_SECRET=your_secret_key
+OPENROUTER_API_KEY=your_key_here
+CRYPTOPANIC_API_KEY=your_key_here
+```
+### 3. Frontend Setup
+```bash
+cd ../clent
+npm install
+```
+Run the app: `npm run dev`
