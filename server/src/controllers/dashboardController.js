@@ -21,6 +21,13 @@ exports.getDashboardData = async (req, res) => {
       const coinIds = prefs.assets.join(',');
       const pricesRes = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=usd`);
       dashboardData.prices = pricesRes.data;
+    } catch (e) { console.error("Prices API Failed:", e.message);
+        dashboardData.prices = prefs.assets.reduce((acc, coin) => {
+        acc[coin] = { usd: 0 }; 
+        return acc;
+      }, {});
+     }
+
 
       // 2. Fetch News (CryptoPanic)
       try {
@@ -59,10 +66,5 @@ exports.getDashboardData = async (req, res) => {
       } catch (e) { console.error("Meme API Failed:", e.message); }
 
       res.json(dashboardData);
-
-    } catch (error) {
-      console.error("General Dashboard Error:", error.message);
-      res.status(500).json({ error: "Major dashboard failure" });
-    }
   });
 };
